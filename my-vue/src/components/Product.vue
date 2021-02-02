@@ -103,44 +103,21 @@
                 </div>
                 <div class=" col-lg-9 col-md-4 col-12">
                     <div class="row">
-                      <div class="col-xl-3 col-lg-12 col-md-4 col-12" v-for="product in products">
+                    <div class="col-xl-3 col-lg-12 col-md-4 col-12" v-for="product in products">
                     <div class="single-product">
                         <div class="product-img">
-                            <router-link to="/detail">
-                            <img class="default-img" :src="'http://127.0.0.1:8001/storage//' + product.image"  alt="#">
+                            <router-link :to="{ name: 'details', params: { productID: product.id }}">
+                            <img class="default-img" :src="'http://127.0.0.1:8000/storage//' + product.image" alt="#">
                             </router-link>
                             <div class="button-head">
-                                <div class="product-action">
-                                    <a
-                                        data-toggle="modal"
-                                        data-target="#exampleModal"
-                                        title="Quick View"
-                                        href="#"
-                                        ><i class=" ti-eye"></i
-                                        ><span>Quick Shop</span></a
-                                    >
-                                    <a title="Wishlist" href="#"
-                                        ><i class=" ti-heart "></i
-                                        ><span>Add to Wishlist</span></a
-                                    >
-                                    <a title="Compare" href="#"
-                                        ><i class="ti-bar-chart-alt"></i
-                                        ><span>Add to Compare</span></a
-                                    >
-                                </div>
                                 <div class="product-action-2">
-                                    <button
-                                        @click="addCart(product)"
-                                        class="btn btn-primary"
-                                    >
-                                        Add to cart
-                                    </button>
+                                    <button @click="addCart(product)" class="btn btn-primary">Add to cart</button>
                                 </div>
                             </div>
                         </div>
                         <div class="product-content">
-                            <h3>
-                                <a>{{ product.name }}</a>
+                            <h3 class="name-category">
+                               <router-link style="color:black;" :to="{ name: 'details', params: { productID: product.id }}">{{product.name}}</router-link>
                             </h3>
                             <div class="product-price">
                                 <span>{{ product.price }}</span>
@@ -148,11 +125,12 @@
                         </div>
                     </div>
                 </div>
-                    </div>
-                </div>
+            </div>
+        </div>
               
             </div>
         </div>
+        
     </div>
 </template>
 <script>
@@ -246,7 +224,7 @@ export default {
         },
         loadCategories: function() {
             axios
-                .get("http://127.0.0.1:8001/api/category", {
+                .get("http://127.0.0.1:8000/api/category", {
                     params: _.omit(this.selected, "categories")
                 })
                 .then(response => {
@@ -258,13 +236,12 @@ export default {
         },
         loadProducts: function() {
             axios
-                .get("http://127.0.0.1:8001/api/products", {
+                .get("http://127.0.0.1:8000/api/products", {
                     params: this.selected
                 })
                 .then(response => {
                     this.products = response.data.data;
                     this.loading = false;
-                    console.log(this.products);
                 })
                 .catch(function(error) {
                     console.log(error);
@@ -272,7 +249,7 @@ export default {
         },
         loadManufacturers: function() {
             axios
-                .get("http://127.0.0.1:8001/api/manufacturers", {
+                .get("http://127.0.0.1:8000/api/manufacturers", {
                     params: _.omit(this.selected, "manufacturers")
                 })
                 .then(response => {
@@ -285,7 +262,7 @@ export default {
         },
         loadPrices: function() {
             axios
-                .get("http://127.0.0.1:8001/api/prices", {
+                .get("http://127.0.0.1:8000/api/prices", {
                     params: _.omit(this.selected, "prices")
                 })
                 .then(response => {
@@ -617,4 +594,16 @@ export default {
 .mr {
     margin-top:-60px;
 }
+.name-category {
+    margin: 0px;
+    width: 100%;
+    color: rgb(36, 36, 36);
+    font-size: 13px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.54;
+    letter-spacing: 0.1px;
+}
+
 </style>

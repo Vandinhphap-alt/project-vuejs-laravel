@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Product from '@/components/Product'
 import Checkout from '@/components/Checkout'
 import ProductDetail from '@/components/ProductDetail'
+import ListProduct from '@/components/ListProduct'
 
 Vue.use(Router)
 
@@ -21,13 +22,14 @@ export default new Router({
         name: 'checkout',
         component: Checkout
     }, {
-        path: '/detail',
-        name: 'detail',
-        component: ProductDetail
-    }, {
-        path: '/prduct/:productID/details',
+        path: '/product/:productID',
         name: 'details',
         component: ProductDetail,
+        props: true,
+    }, {
+        path: '/listproducts/:categoryID',
+        name: 'listproducts',
+        component: ListProduct,
         props: true,
     }]
 })

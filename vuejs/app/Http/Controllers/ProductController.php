@@ -56,9 +56,10 @@ class ProductController extends Controller
         }
         $products = new Product($data);
         $products->save();
-        // dd($products);
         return  redirect('/product')->with('message', 'Created successfully !');
     }
+
+    
 
     /**
      * Display the specified resource.
@@ -103,17 +104,13 @@ class ProductController extends Controller
         $products = Product::find($id);
 
         $path = null;
-        if ($request->file('image')) {
-            $path = $request->file('image')->store('public/new');
-            @unlink('storage/'. $products->image);
-        }
-
         $data = $request->all();
-        $data['image'] = $path;
 
-//        dd($data);
+        if ($request->file('image')) {
+            $path = $request->file('image')->store('public/products');
+            $data['image'] = $path;
+        }
         $products->update($data);
-
         return redirect('/product');
 
     }

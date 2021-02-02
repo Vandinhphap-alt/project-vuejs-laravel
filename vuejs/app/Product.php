@@ -39,10 +39,10 @@ class Product extends Model
                            $query->orWhere('price', '<', '50');
                        })
                        ->when(in_array(1, $prices), function ($query) {
-                           $query->orWhereBetween('price', ['50', '100']);
+                           $query->orWhereBetween('price', ['50', '99']);
                        })
                        ->when(in_array(2, $prices), function ($query) {
-                           $query->orWhereBetween('price', ['100', '500']);
+                           $query->orWhereBetween('price', ['100', '499']);
                        })
                        ->when(in_array(3, $prices), function ($query) {
                            $query->orWhere('price', '>', '500');

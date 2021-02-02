@@ -49,13 +49,13 @@
                         <div class="col-xl-3 col-lg-4 col-md-4 col-12" v-for="category in categories">
                             <div class="single-product">
                                 <div class="product-img">
-                                    <router-link to="/products">
+                                    <router-link :to="{ name: 'listproducts', params: { categoryID: category.id }}">
                                     <img width="550" height="300" class="default-img" v-bind:src="category.image" alt="#">
                                     </router-link>
                                 </div>
                                     <div class="product-content">
-                                        <h5>
-                                          <router-link to="/products">{{category.name}}</router-link>
+                                        <h5 class="name-category">
+                                 <router-link style="color:black;" to="/products">{{category.name}}</router-link>
                                         </h5>
                                     </div>
                                 </div>
@@ -117,7 +117,6 @@
             </div>
 	    </div>
     </div>
-   
 </div>
 </div>
 
@@ -148,7 +147,7 @@ import _ from 'lodash';
             }
         },
         created(){
-            axios.get('http://127.0.0.1:8001/api/category')
+            axios.get('http://127.0.0.1:8000/api/category')
             .then(response => {
                 this.categories = response.data.data
                 console.log(response)
@@ -558,4 +557,17 @@ img.default-img{
     padding-right:15px;
     padding-left:15px;
 }
+.name-category {
+    margin: 0px;
+    width: 100%;
+    color: rgb(36, 36, 36);
+    font-size: 17px;
+    font-weight: 400;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.54;
+    letter-spacing: 0.1px;
+    text-align: center;
+}
+
 </style>

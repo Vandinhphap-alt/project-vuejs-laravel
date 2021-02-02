@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+
     public function index()
     {
         header('Access-Control-Allow-Origin: *');
@@ -16,13 +17,20 @@ class ProductController extends Controller
             request()->input('prices', []),
             request()->input('categories', []),
             request()->input('manufacturers', [])
-        )->get();
-
+        )->get()
+        ->map(function ($products) {
+            $products->image = str_replace('public', '', $products->image);
+    
+            return $products;
+        });
         return ProductResource::collection($products);
     }
     public function findID($id)
     {
+        header('Access-Control-Allow-Origin: *');
+
         $product = Product::find($id);
+        $product->image = str_replace('public', '', $product->image);
         return new ProductResource($product); 
     }
 }

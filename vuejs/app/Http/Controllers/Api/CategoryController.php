@@ -26,7 +26,11 @@ class CategoryController extends Controller
     }
     public function findID($id)
     {
-        $category = Category::find($id);
-        return new CategoryResource($category); 
+        header('Access-Control-Allow-Origin: *');
+        $category = Category::with('products')->find($id);
+        foreach($category->products as $ct){
+            $ct->image = str_replace('public','',$ct->image);
+        }
+        return new CategoryResource($category,$ct); 
     }
 }
